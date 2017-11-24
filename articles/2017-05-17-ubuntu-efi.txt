@@ -2,10 +2,9 @@
 title: Ubuntu EFI 
 author: Ninja 
 date: 2017/05/17
-
 modprobe: ERROR: could not insert 'vboxdrv': Required key not available
 
-
+```
 root@ubuntu-xenial:~# apt install mokutil -y
 
 root@ubuntu-xenial:~# openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=BelomorNL/"
@@ -28,8 +27,9 @@ root@ubuntu-xenial:~# mokutil --import MOK.der
 input password: 
 input password again: 
 root@ubuntu-xenial:~# 
-
+```
 A reboot will be needed; Follow the menu presented after boot to enroll the key.
 
 
 https://gist.github.com/gabrieljcs/68939c7eeadfabfdbc6b40100130270d
+
