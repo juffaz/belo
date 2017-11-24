@@ -1,0 +1,21 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    builder (3.2.3)
+    rack (2.0.3)
+    rdiscount (2.2.0.1)
+    toto (0.4.9)
+      builder
+      rack
+      rdiscount
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  builder
+  rdiscount
+  toto
+
+BUNDLED WITH
+   1.16.0
