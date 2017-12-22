@@ -1,0 +1,15 @@
+title: Heroku CLI 
+author: Ninja 
+date: 2017/12/22
+
+#### heroku cli
+
+heroku login
+heroku logs
+heroku git:clone myappl 
+
+git config user.name "root"
+
+git commit -am "comment"
+
+git push heroku master 
