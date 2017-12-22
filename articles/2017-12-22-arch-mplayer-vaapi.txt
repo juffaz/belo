@@ -9,8 +9,10 @@ $git clone https://aur.archlinux.org/mplayer-vaapi.git
 $cd mplayer-vaapi/
 $makepkg -sri
 ```
+
 If recived error :  ... is not valid (invalid or corrupted database (PGP signature))
 edit SigLevel on /etc/pacman.conf
+
 
 ```
 $sudo sed -i 's/Required\ DatabaseOptional/Optional\ TrustAll/' pacman.conf
@@ -24,6 +26,7 @@ Recvived error :
 ==> ERROR: One or more PGP signatures could not be verified!
 
 Add gpg key if you installed pkg from aur. 
+
 ```
 $gpg --recv-key 51E8B148A9999C34
 $makepkg -sri
