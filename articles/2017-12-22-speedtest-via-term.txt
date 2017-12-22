@@ -10,12 +10,15 @@ check speedtest via linux console
 
 required package: curl, python
 
+```
 curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+```
 
 Sample:
 
 Sample:
 
+```
 [root@host~]# curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python –
 Retrieving speedtest.net configuration…
 Testing from Sky Link (85.132.*.*)…
@@ -27,3 +30,5 @@ Download: 93.41 Mbit/s
 Testing upload speed……………………………………………………………………………………
 Upload: 94.26 Mbit/s
 [root@host~]#
+```
+
