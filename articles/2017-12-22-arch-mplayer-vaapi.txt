@@ -1,5 +1,5 @@
 
-title: Install mplayer with VAAPI from aur(Archlinux)
+title: Arch Mplayer Vaapi
 author: Ninja 
 date: 2017/12/22
 
