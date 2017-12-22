@@ -4,8 +4,6 @@ author: Ninja
 date: 2017/12/22
 
 
-
-
 check speedtest via linux console
 
 required package: curl, python
@@ -13,9 +11,6 @@ required package: curl, python
 ```
 curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
 ```
-
-Sample:
-
 Sample:
 
 ```
@@ -31,4 +26,6 @@ Testing upload speed……………………………………………………
 Upload: 94.26 Mbit/s
 [root@host~]#
 ```
+
+End
 
