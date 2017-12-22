@@ -1,0 +1,29 @@
+title: SSH broken pipe 
+author: Ninja 
+date: 2017/12/22
+
+Error
+packet_write_wait: Connection to IP port 22: Broken pipe
+
+
+
+Client ssh side:
+
+```
+echo 'ClientAliveInterval 30' | sudo tee -a ~/.ssh/config
+echo 'ClientAliveCountMax 1200' | sudo tee -a ~/.ssh/config
+```
+
+ClientAliveCountMax – This indicates the total number of checkalive message sent by the ssh server without getting any response from the ssh client. Default is 3.
+
+ClientAliveInterval – This indicates the timeout in seconds. After x number of seconds, ssh server will send a message to the client asking for response. Deafult is 0 (server will not send message to client to check.).
+
+
+(optional) 
+
+```
+echo 'TCPKeepAlive yes' | sudo tee -a ~/.ssh/config
+```
+
+
+TCPKeepAlive - Specifies whether the system should send TCP keepalive messages to the other side. If they are sent, death of the connection or crash of one of the machines will be properly noticed. However, this means that connections will die if the route is down temporarily, and some people find it annoying (The default is 'yes').
