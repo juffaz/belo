@@ -6,7 +6,7 @@ date: 2017/10/05
 
 
 Defense – Slow HTTP DoS Attacks in Apache HTTP – CentOS 7
-Posted on October 5, 2017 by yo0w | No Comments	
+Posted on October 5, 2017 	
 
 ####Defense with apache+mod_security+mod_evasive
 
