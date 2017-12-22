@@ -1,0 +1,76 @@
+title: Centos check FC 
+author: Ninja 
+date: 2017/12/22
+
+CentOS/Redhat FC check(Fibre Channel HBA)
+Posted on October 5, 2017 	
+
+[root@ ~]# ll /sys/class/fc_host/
+total 0
+lrwxrwxrwx. 1 root root 0 Sep 13 02:54 host0 -> ../../devices/pci0000:00/0000:00:03.0/0000:08:00.0/host0/fc_host/host0
+lrwxrwxrwx. 1 root root 0 Sep 13 02:54 host1 -> ../../devices/pci0000:00/0000:00:03.0/0000:08:00.1/host1/fc_host/host1
+[root@ ~]#
+
+ 
+
+[root@ ~]# lsmod | grep qla
+qla2xxx 621980 0
+scsi_transport_fc 64056 1 qla2xxx
+[root@ ~]#
+
+ 
+
+[root@ ~]# yum install sysfsutils -y ### install HBA tools
+
+[root@ ~]# systool -c fc_host -v host0
+Class = “fc_host”
+
+Class Device = “host0”
+Class Device path = “/sys/devices/pci0000:00/0000:00:03.0/0000:08:00.0/host0/fc_host/host0”
+dev_loss_tmo = “30”
+fabric_name = “0x100000051e06db8b”
+issue_lip = <store method only>
+max_npiv_vports = “254”
+node_name = “0x51402ec0018262d5”
+npiv_vports_inuse = “0”
+port_id = “0x010700”
+port_name = “0x51402ec0018262d4”
+port_state = “Online”
+port_type = “NPort (fabric via point-to-point)”
+speed = “4 Gbit”
+supported_classes = “Class 3”
+supported_speeds = “8 Gbit, 16 Gbit, 32 Gbit”
+symbolic_name = “SN1100Q FW:v8.03.05 DVR:v8.07.00.33.07.3-k1”
+system_hostname = “”
+tgtid_bind_type = “wwpn (World Wide Port Name)”
+uevent =
+vport_create = <store method only>
+vport_delete = <store method only>
+
+Device = “host0”
+Device path = “/sys/devices/pci0000:00/0000:00:03.0/0000:08:00.0/host0”
+fw_dump_template = “c”
+fw_dump =
+nvram = “ISP ”
+optrom_ctl = <store method only>
+optrom =
+reset = <store method only>
+sfp = “”
+uevent = “DEVTYPE=scsi_host”
+vpd = “”
+[root@ ~]#
+
+ 
+
+[root@ ~]# systool -c fc_host -v | grep port_name
+port_name = “0x51402ec0018262d4”
+port_name = “0x51402ec0018262d6”
+[root@ ~]#
+
+ 
+
+[root@ ~]# systool -c fc_host -v | grep port_state
+port_state = “Online”
+port_state = “Linkdown”
+[root@ ~]#
+
