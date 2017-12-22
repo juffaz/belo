@@ -1,5 +1,7 @@
+title: Install mplayer with VAAPI from aur(Archlinux)
+author: Ninja 
+date: 2017/12/22
 
-Install mplayer with VAAPI from aur(Archlinux)
 
 ```
 $git clone https://aur.archlinux.org/mplayer-vaapi.git
