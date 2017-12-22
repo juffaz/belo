@@ -1,0 +1,36 @@
+
+title: Ubuntu EFI Virtbox 
+author: Ninja 
+date: 2017/05/17
+
+modprobe: ERROR: could not insert 'vboxdrv': Required key not available
+
+```
+root@ubuntu-xenial:~# apt install mokutil -y
+
+root@ubuntu-xenial:~# openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=BelomorNL/"
+Generating a 2048 bit RSA private key
+...................................................+++
+........+++
+writing new private key to 'MOK.priv'
+-----
+root@ubuntu-xenial:~# /usr/src/linux-headers-4.4.0-101-generic/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vboxdrv)
+root@ubuntu-xenial:~# /usr/src/linux-headers-4.4.0-101-generic/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vboxnetadp)
+root@ubuntu-xenial:~# /usr/src/linux-headers-4.4.0-101-generic/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vboxnetflt)
+root@ubuntu-xenial:~# /usr/src/linux-headers-4.4.0-101-generic/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vboxpci)
+root@ubuntu-xenial:~# cat /etc/lsb-release 
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=16.04
+DISTRIB_CODENAME=xenial
+DISTRIB_DESCRIPTION="Ubuntu 16.04.3 LTS"
+root@ubuntu-xenial:~# 
+root@ubuntu-xenial:~# mokutil --import MOK.der
+input password: 
+input password again: 
+root@ubuntu-xenial:~# 
+```
+A reboot will be needed; Follow the menu presented after boot to enroll the key.
+
+
+https://gist.github.com/gabrieljcs/68939c7eeadfabfdbc6b40100130270d
+
