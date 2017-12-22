@@ -1,0 +1,29 @@
+title: Selinux Laravel 
+author: Ninja 
+date: 2017/10/05
+
+Selinux and Laravel (apache+php) !!! Dont make Dan Walsh weep :(
+Posted on October 5, 2017 	
+
+### Allow serv and write specific dir
+chcon -t httpd_sys_content_t /var/www/html -R
+chcon -t httpd_sys_rw_content_t /var/www/html/storage -R
+ 
+
+### If u use SSL cert directory use follow commandz:
+restorecon -RvF /etc/pki/tls/certs/
+ 
+
+### Add connection port for apache (my laravel engine connected to many backend servers)
+yum -y install policycoreutils-python
+semanage port -l | egrep ‘(^http_port_t)’
+ 
+
+semanage port -a -t http_port_t -p tcp 83
+semanage port -a -t http_port_t -p tcp 91
+semanage port -a -t http_port_t -p tcp 92
+semanage port -m -t http_port_t -p tcp 8080 ### ValueError: Port tcp/8080 already defined
+ 
+
+Links:
+https://stopdisablingselinux.com/

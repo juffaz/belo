@@ -1,0 +1,44 @@
+title: Modsec Laravel Token 
+author: Ninja 
+date: 2017/10/05
+
+
+
+Defense Part 2 – ModSecurity rule & Laravel token – CentOS 7
+Posted on October 5, 2017 
+
+Modsecurity Log crying to Laravel token.
+
+Very bad :(
+
+
+
+Defense Part 2 – ModSecurity rule & Laravel token – CentOS 7
+Posted on October 5, 2017 by yo0w | No Comments	
+
+Modsecurity Log crying to Laravel token.
+
+Very bad :(
+
+[Wed Oct 04 17:02:19.767277 2017] [:error] [pid 12647] [client 31.*.*.*] ModSecurity: Warning. Pattern match “(?i:(\\\\!\\\\=|\\\\&\\\\&|\\\\|\\\\||>>|<<|>=|<=|<>|<=>|xor|rlike|regexp|isnull)|(?:not\\\\s+between\\\\s+0\\\\s+and)|(?:is\\\\s+null)|(like\\\\s+null)|(?:(?:^|\\\\W)in[+\\\\s]*\\\\([\\\\s\\\\d\\”]+[^()]*\\\\))|(?:xor|<>|rlike(?:\\\\s+binary)?)|(?:regexp\\\\s+binary))” at REQUEST_COOKIES:XSRF-TOKEN. [file “/etc/httpd/modsecurity.d/activated_rules/modsecurity_crs_41_sql_injection_attacks.conf”] [line “70”] [id “981319”] [rev “2”] [msg “SQL Injection Attack: SQL Operator Detected”] [data “Matched Data: xoR found within REQUEST_COOKIES:XSRF-TOKEN: eyJpdiI6Im1XYlVhbXpoSGpcL0c0dTlBSDJVWVNRPT0iLCJ2YWx1ZSI6IjQyb2htV1dEYldxaWptRm45bUdGVWhnUzhwXC9sYTRvd3B2NFk4Q1wvMUFYNnpMYjNBQ1VPdmg1RVV1cXQzSXF5UEJOdWF4V0taVExoRXA4WENNclVtOGc9PSIsIm1hYyI6IjE1YWVlMWI3NDhjNjczZGNiYTA4OTNlYmEwZjIzNzY1MjZjNzMwYzU4NjdjMTMzM2RlYTRiMjkzNWU3MTEyYTEifQ==”] [severity “CRITICAL”] [ver “OWASP_CRS/2.2.9”] [maturity “9”] [accuracy “8”] [tag “OWASP_CRS/WEB_ATTACK/SQL_INJECTION”] [tag “WASCTC/WASC-19”] [tag “OWASP_TOP_10/A1”] [tag “OWASP_AppSensor/CIE1”] [tag “PC [hostname “myhost.com”] [uri “/integration-window/api/administrative-faults/get-administrative-fault-details”] [unique_id “WdTb2x5I7jYGijvXwmyJKQAAAA4”]
+
+ 
+
+Edit file /etc/httpd/modsecurity.d/activated_rules/modsecurity_crs_41_sql_injection_attacks.conf
+
+Add after 70 line new rule.
+
+# -=[ SQL Operators ]=-
+#
+SecRule REQUEST_COOKIES|!REQUEST_COOKIES:/__utm/|REQUEST_COOKIES_NAMES|ARGS_NAMES|ARGS|XML:/* “(?i:(\!\=|\&\&|\|\||>>|<<|>=|<=|<>|<=>|xor|rlike|regexp|isnull)|(?:not\s+between\s+0\s+and)|(?:is\s+null)| (like\s+null)|(?:(?:^|\W)in[+\s]*\([\s\d\”]+[^()]*\))|(?:xor|<>|rlike(?:\s+binary)?)|(?:regexp\s+binary))” “phase:2,rev:’2′,ver:’OWASP_CRS/2.2.9′,maturity:’9′,accuracy:’8′,capture,t:none,t:urlDecodeUni ,block,msg:’SQL Injection Attack: SQL Operator Detected’,id:’981319′,logdata:’Matched Data: %{TX.0} found within %{MATCHED_VAR_NAME}: %{MATCHED_VAR}’,severity:’2′,tag:’OWASP_CRS/WEB_ATTACK/SQL_INJECTIO N’,tag:’WASCTC/WASC-19′,tag:’OWASP_TOP_10/A1′,tag:’OWASP_AppSensor/CIE1′,tag:’PCI/6.5.2′,setvar:’tx.msg=%{rule.msg}’,setvar:tx.sql_injection_score=+%{tx.notice_anomaly_score},setvar:tx.anomaly_score=+% {tx.notice_anomaly_score},setvar:tx.%{rule.id}-OWASP_CRS/WEB_ATTACK/SQL_INJECTION-%{matched_var_name}=%{tx.0}”
+
+### new rule laravel cookie
+SecRuleUpdateTargetById 981319 !REQUEST_COOKIES:XSRF-TOKEN
+
+and restart apache
+
+systemctl restart httpd
+
+ 
+
+Greats to ModSecurity expertz.

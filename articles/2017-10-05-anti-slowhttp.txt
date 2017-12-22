@@ -1,0 +1,85 @@
+title: Anti SlowHttp 
+author: Ninja 
+date: 2017/10/05
+
+
+
+
+Defense – Slow HTTP DoS Attacks in Apache HTTP – CentOS 7
+Posted on October 5, 2017 by yo0w | No Comments	
+
+####Defense with apache+mod_security+mod_evasive
+
+Install pkg: apache, mod_security, mod_evasive
+
+#yum install -y httpd mod_evasive mod_security mod_security_crs
+
+ 
+
+Edit file /etc/httpd/modsecurity.d/modsecurity_crs_10_config.conf
+
+Add follow string
+
+#### slow http
+
+SecRule RESPONSE_STATUS “@streq 408” “phase:5,t:none,nolog,pass,setvar:ip.slow_dos_counter=+1, expirevar:ip.slow_dos_counter=120, id:’1234123456′”
+
+SecRule IP:SLOW_DOS_COUNTER “@gt 5” “phase:1,t:none,log,drop,msg:’Client Connection Dropped due to high number of slow DoS alerts’, id:’1234123457′”
+
+And restart apache
+
+# systemctl restart httpd
+
+ 
+
+ 
+Defense with iptables
+
+Stop and disable firewalld
+
+# systemctl disable firewalld
+
+# systemctl stop firewalld
+
+#  yum update && yum install iptables-services
+#  systemctl enable iptables
+#  systemctl start iptables
+#  iptables -A INPUT -p tcp –syn –dport 80 -m connlimit –connlimit-above 100 -j DROP
+
+#  iptables -A INPUT -p tcp –syn –dport 443 -m connlimit –connlimit-above 100 -j DROP
+
+ 
+sysctl
+
+Edit /etc/sysctl.conf
+
+# Enable TCP SYN cookie protection
+net.ipv4.tcp_syncookies = 1
+# Decrease the time default value for tcp_fin_timeout connection
+net.ipv4.tcp_fin_timeout = 3
+# Turn off the tcp_window_scaling
+net.ipv4.tcp_window_scaling = 0
+# Turn off the tcp_sack
+net.ipv4.tcp_sack = 0
+
+# sysctl -p
+
+ 
+
+ 
+
+Test DoS attack
+
+Example of usage in slowloris mode:
+
+# ./slowhttptest -c 1000 -H -g -o my_header_stats -i 10 -r 200 -t GET -u https://mytesthost.com -x 24 -p 3
+
+ 
+
+Links:
+
+https://github.com/shekyan/slowhttptest/wiki/InstallationAndUsage
+
+https://www.acunetix.com/blog/articles/slow-http-dos-attacks-mitigate-apache-http-server/
+
+https://nmap.org/nsedoc/scripts/http-slowloris-check.html
