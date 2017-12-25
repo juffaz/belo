@@ -9,15 +9,18 @@ debian Stretch glusterfs
 (run command as both servers deb9host01 and deb9host02)
 ```
 apt -y install glusterfs-server  (install glusterfs from official repo stretch)
+```
 
 (optional xfs)
+```
 apt-get install lvm2 xfsprogs python-software-properties -y
 apt-get install lvm2 xfsprogs  -y
 mkfs.xfs /dev/sdb1
 mkdir -p /export/brick1
 mount /dev/sdb1 /export/brick1/
+```
 
-
+```
 cat /etc/fstab
 ....
 /dev/sdb1 /export/brick1 xfs defaults 1 2
