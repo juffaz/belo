@@ -1,0 +1,33 @@
+title: Debian Stretch glusterfs 
+author: Ninja 
+date: 2017/12/25
+
+
+debian Stretch glusterfs
+
+
+(run command as both servers deb9host01 and deb9host02)
+apt -y install glusterfs-server  (install glusterfs from official repo stretch)
+
+(optional xfs)
+apt-get install lvm2 xfsprogs python-software-properties -y
+apt-get install lvm2 xfsprogs  -y
+mkfs.xfs /dev/sdb1
+mkdir -p /export/brick1
+mount /dev/sdb1 /export/brick1/
+
+
+cat /etc/fstab
+
+....
+
+/dev/sdb1 /export/brick1 xfs defaults 1 2
+localhost:/www1 /var/www1 glusterfs defaults,_netdev 0 0
+
+
+(run command as deb9host01)
+gluster peer probe deb9host02
+gluster volume create www1 replica 2 transport tcp deb9ahost01:/export/brick1/www1 deb9ahost02:/export/brick1/www1
+gluster volume start www1
+
+Done :) 
