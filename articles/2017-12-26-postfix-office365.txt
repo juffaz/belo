@@ -1,0 +1,56 @@
+itle: Postfix Office365 
+author: Ninja 
+date: 2017/12/26
+
+
+
+centos 7 postfix relay to office 365
+
+#yum install postfix cyrus-sasl-plain mailx
+
+#vi /etc/postfix/main.cf
+
+relayhost = [smtp.office365.com]:587
+mynetworks = 127.0.0.0/8
+inet_interfaces = loopback-only
+smtp_use_tls = yes
+smtp_always_send_ehlo = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_sasl_tls_security_options = noanonymous
+smtp_tls_security_level = encrypt
+smtp_generic_maps = hash:/etc/postfix/generic
+###smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+
+
+#vi /etc/postfix/sasl_passwd
+[smtp.office365.com]:587 root@belomor.nl:n3blabla
+
+
+#postmap /etc/postfix/sasl_passwd
+
+#chown root:postfix /etc/postfix/sasl_passwd
+
+#chmod 640 /etc/postfix/sasl_passwd
+
+#vi /etc/postfix/generic
+root@server01 root@belomor.nl 
+
+#chown root:root /etc/postfix/generic
+#chmod 0600 /etc/postfix/generic
+#postmap /etc/postfix/generic
+
+
+#vi /etc/aliases
+
+mailer-daemon:	postmaster
+postmaster:	root
+root:           root@belomor.nl 
+
+#newaliases
+
+#systemctl restart postfix
+
+#echo "This is the body of the email"| mail -r"ROOT BeLoMoR<root@belomor.nl>" -s "Test mail" root-belomor@gmail.com
