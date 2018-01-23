@@ -3,16 +3,21 @@ author: Ninja
 date: 2018/01/22
 
 Centos 7 postfix with gmail/google domain
-
+```
 #yum install postfix mailx cyrus-sasl cyrus-sasl-plain -y
+```
 
+```
 #vi /etc/postfix/sasl_passwd
 [smtp.gmail.com]:587    monitor@belomor.nl:pass
-
+```
+```
 #postmap /etc/postfix/sasl_passwd
-
+```
+```
 #vi /etc/postfix/main.cf
-
+```
+```
 #### gmail 
 relayhost = [smtp.gmail.com]:587
 smtp_use_tls = yes
@@ -20,4 +25,4 @@ smtp_sasl_auth_enable = yes
 smtp_sasl_security_options =
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.crt
-
+```
