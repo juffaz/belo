@@ -5,16 +5,16 @@ date: 2018/01/23
 
 Wine cannot import dll isskin.dll 
 
-wine Downloads/Counter-Strike_1.6.exe 
+$wine Downloads/Counter-Strike_1.6.exe 
 
 receive runtime error  isskin.dll
 
 
-sudo pacman -S winetricks
+$sudo pacman -S winetricks
 
-winetricks
+$winetricks
 
 
 Select the default wineprefix → Install a Windows DLL or component → select vcrun6 и mfc42 and press OK
 
-wine Downloads/Counter-Strike_1.6.exe 
+$wine Downloads/Counter-Strike_1.6.exe 
