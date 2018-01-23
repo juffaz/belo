@@ -1,6 +1,8 @@
 title: Wine isskin 
 author: Ninja 
 date: 2018/01/23
+
+
 Wine cannot import dll isskin.dll 
 
 wine Downloads/Counter-Strike_1.6.exe 
