@@ -1,4 +1,4 @@
-title:  arch huawie
+title:  arch huawei
 author: Ninja 
 date: 2018/03/03
 
