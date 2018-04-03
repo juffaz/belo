@@ -1,0 +1,23 @@
+title:  huawie arch linux usb_modeswitch autorun 
+author: Ninja 
+date: 2018/03/03
+
+Huawie usb_modeswitch autorun(Arch )
+```
+
+[root@term-001 ~]# cat /etc/udev/rules.d/70-huawei_e353.rules 
+
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1f01", RUN+="/usr/sbin/usb_modeswitch -v 0x12d1 -p 0x1f01 -c /usr/share/usb_modeswitch/12d1\:1f01"
+[root@term-001 ~]# lsusb |grep Hua
+Bus 002 Device 011: ID 12d1:14db Huawei Technologies Co., Ltd. E353/E3131
+[root@term-001 ~]#
+
+[root@term-001 ~]# cat /etc/netctl/modem 
+Interface=enp0s30u2u1 
+Connection=ethernet
+IP=dhcp
+
+[root@term-001 ~]# 
+
+```
+```
