@@ -1,0 +1,48 @@
+title:  reverse ssh connect 
+author: Ninja 
+date: 2018/03/03
+
+Reverse ssh connect (Arch + CentOS 7)
+```
+rch# ssh-keygen -f /home/revssh/.ssh/revssh -t ecdsa
+arch# scp /home/revssh/.ssh/revssh.pub revssh@centos7:/home/revssh/authorized_keys
+arch# vi /etc/systemd/system/secure-tunnel\@.service
+[Unit]
+Description=Setup a secure tunnel to %I
+##After=network.target
+After=sys-subsystem-net-devices-enp0s29u1u8.device
+
+[Service]
+Environment="LOCAL_ADDR=localhost"
+EnvironmentFile=/etc/default/secure-tunnel@%i
+ExecStart=/usr/bin/ssh -NT -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R ${LOCAL_PORT}:localhost:${REMOTE_PORT} revssh@${TARGET} -i /home/revssh/.ssh/revssh
+
+# Restart every >2 seconds to avoid StartLimitInterval failure
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+arch# vi /etc/default/secure-tunnel\@revssh 
+TARGET=revssh
+LOCAL_ADDR=0.0.0.0
+LOCAL_PORT=20135
+REMOTE_PORT=22
+
+arch# echo "10.2.2.21 revssh" >>/etc/hosts
+
+
+arch# systemctl daemon-reload
+arch# systemctl enable secure-tunnel\@revssh
+arch# systemctl start secure-tunnel\@revssh
+
+
+optional)
+
+centos7# cat ~/.ssh/authorized_keys
+command="",no-pty ssh-rsa blabla
+
+
+```
+```
