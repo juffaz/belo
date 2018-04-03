@@ -2,7 +2,7 @@ title:  arch huawie
 author: Ninja 
 date: 2018/03/03
 
-arch huawie
+arch huawei
 ```
 
 [root@term-001 ~]# cat /etc/udev/rules.d/70-huawei_e353.rules 
