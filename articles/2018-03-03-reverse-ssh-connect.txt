@@ -5,9 +5,9 @@ date: 2018/03/03
 Reverse ssh connect (Arch + CentOS 7)
 ```
 ```
-arch# ssh-keygen -f /home/revssh/.ssh/revssh -t ecdsa </br> 
+arch# ssh-keygen -f /home/revssh/.ssh/revssh -t ecdsa <br/> 
 ```
-arch# scp /home/revssh/.ssh/revssh.pub revssh@centos7:/home/revssh/authorized_keys </br> 
+arch# scp /home/revssh/.ssh/revssh.pub revssh@centos7:/home/revssh/authorized_keys <br/> 
 ```
 arch# vi /etc/systemd/system/secure-tunnel\@.service   
 ```
