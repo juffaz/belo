@@ -5,15 +5,15 @@ date: 2018/03/03
 Reverse ssh connect (Arch + CentOS 7)
 ```
 ```
-arch# ssh-keygen -f /home/revssh/.ssh/revssh -t ecdsa
+arch# ssh-keygen -f /home/revssh/.ssh/revssh -t ecdsa  
 ```
-arch# scp /home/revssh/.ssh/revssh.pub revssh@centos7:/home/revssh/authorized_keys
+arch# scp /home/revssh/.ssh/revssh.pub revssh@centos7:/home/revssh/authorized_keys   
 ```
-arch# vi /etc/systemd/system/secure-tunnel\@.service
+arch# vi /etc/systemd/system/secure-tunnel\@.service   
 ```
 [Unit]
 Description=Setup a secure tunnel to %I
-``` ##After=network.target
+``` ##After=network.target   
 After=sys-subsystem-net-devices-enp0s29u1u8.device
 ```
 ```
