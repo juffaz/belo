@@ -1,4 +1,4 @@
-title:  huawie arch linux usb_modeswitch autorun 
+title:  arch huawie
 author: Ninja 
 date: 2018/03/03
 
